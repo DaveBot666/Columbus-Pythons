@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - POSTGRES_PASSWORD=password
+      - SANIC_AUTORELOAD=true
+    volumes:
+      - ./backend:/srv/app
+    ports:
+      - "8000:8000"
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - './frontend:/srv/app'
+    ports:
+      - 3001:3000
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
